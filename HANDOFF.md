@@ -1,6 +1,6 @@
 # MainStay Suites Houston: HANDOFF
 
-**Version:** v3
+**Version:** v4
 **Built:** August 2026
 **Deploy target:** Vercel (domain pending, eventually `mainstayhouston.com`)
 **Property:** MainStay Suites Texas Medical Center / Reliant Park, 3134 Old Spanish Trail, Houston, TX 77054
@@ -32,7 +32,7 @@ Deploy by dragging the folder into Vercel, or push to a repo and import it. No f
 
 ## Design system
 
-Both accent colours were sampled directly out of the official MainStay Suites logo PNG, so they are the real brand values, not approximations.
+Both accent colors were sampled directly out of the official MainStay Suites logo PNG, so they are the real brand values, not approximations.
 
 | Token | Hex | Use |
 |---|---|---|
@@ -50,11 +50,15 @@ Choice Hotels does not publish a brand type spec, so the face was identified fro
 
 If you get hold of the real MainStay brand kit and the licensed face is different (Century Gothic and Avant Garde are the other plausible candidates, and the old site's component CSS did declare Century Gothic), swapping is one line: the Google Fonts `<link>` in the head, plus the `font-family` on `body`.
 
-**The wordmark is always the logo file, never type.** `img/logo-navy.png` in the header, `img/logo-reverse.png` on the splash and in the footer. The reverse lockup was generated from the official artwork by recolouring the navy type to white while leaving the seafoam mark untouched. Nowhere does the page set "MainStay Suites" in a typeface.
+**The wordmark is always the logo file, never type.** `img/logo-navy.png` in the header, `img/logo-reverse.png` on the splash and in the footer. The reverse lockup was generated from the official artwork by recoloring the navy type to white while leaving the seafoam mark untouched. Nowhere does the page set "MainStay Suites" in a typeface.
 
 ## Structure
 
-The page opens on a full-viewport splash: property photo, navy scrim, the logo, one line of description, and a single Book now button. Nothing else competes with it.
+The page opens on a full-viewport splash: a crossfading slideshow of five property photos behind a navy scrim, the logo, one line of description, and a single Book now button. Nothing else competes with it.
+
+Slide order is king suite, two-queen suite, suite kitchenette, breakfast area, lobby. The lobby is deliberately not first because its wall signage sits right next to the overlaid logo. Slides change every 5.2 seconds, pause when the browser tab is hidden, pause when the splash scrolls out of view, and do not run at all under `prefers-reduced-motion`. The first slide is preloaded and marked `fetchpriority="high"`; the other four are lazy.
+
+To change the slideshow, edit the five `<picture class="slide">` blocks in the splash and the matching preload `<link>` in the head. Any image in `img/` with 900, 1400 and 2000 wide variants can drop in.
 
 The header is fixed but starts translated off-screen. An IntersectionObserver on the splash slides it in once the splash scrolls out of view, and slides it back out when you return to the top. The mobile booking dock follows the same trigger. If IntersectionObserver is missing the header just stays visible, so there is no state where the page loses its navigation.
 
@@ -87,7 +91,7 @@ var EXTRA = { adults: "1" };
 
 Change the parameter names, or flip `FMT` to `"us"`, and every link on the page updates at once. Unknown query parameters get ignored by web apps, so a wrong guess costs nothing: the guest still lands on the correct availability screen. The static `href` values in the markup point at `/rates` too, so this works with JavaScript disabled.
 
-The link uses the `en-us` path rather than the `en-ca` one you sent. Choice geo-redirects anyway, and the guest base here is US medical-centre traffic.
+The link uses the `en-us` path rather than the `en-ca` one you sent. Choice geo-redirects anyway, and the guest base here is US medical-center traffic.
 
 The JSON-LD `sameAs` and `ReserveAction` still reference the canonical property page without `/rates`, which is correct for structured data.
 
@@ -97,11 +101,20 @@ The JSON-LD `sameAs` and `ReserveAction` still reference the canonical property 
 
 Every photo is a real photograph of this property. No stock, no staged interiors from other hotels.
 
-They were pulled from the live mainstayhouston.com media library at original resolution (2000x1333 and 2400x1599), resized to responsive widths, given a light exposure and saturation correction, sharpened after downscale, and exported as WebP with JPEG fallbacks. The old site was serving several of these at 600x450, which is where the low-res look came from. The source files were always bigger.
+**All imagery was re-exported in v4 from true originals.** The earlier versions pulled some files from resized derivatives on the old server, and one of those, the pool shot used on the splash, was a 365 KB re-encode of a 2000x1333 frame. That is where the grain came from. The unsuffixed originals turned out to be 2400x1599 at 1.1 to 2.0 MB each, so everything was rebuilt from those at quality 86 with lighter sharpening.
 
-Photos used: pool and courtyard (splash and property grid), lobby, breakfast area, fitness room, guest laundry, king suite, two-queen suite, queen suite, accessible bathroom.
+Source paths for the originals, if you ever need them again:
 
-**One caveat.** These images are dated. They read as early-2010s interiors, and several Google reviews mention rooms feeling outdated. New photography would do more for conversion than anything else on this page. The layout takes drop-in replacements at the same filenames and aspect ratios.
+```
+https://www.mainstayhouston.com/site/assets/files/17994/<name>.jpg
+https://www.mainstayhouston.com/site/assets/files/17245/<name>.jpg
+https://www.mainstayhouston.com/site/assets/files/17453/<name>.jpg
+https://www.mainstayhouston.com/site/assets/files/14896/tx933pool2_1.jpg
+```
+
+Note there is no size suffix. Adding one (`.2000x0.jpg`, `.600x450.jpg`) gets you the degraded copy.
+
+**One caveat that has not changed.** These images are dated. They read as early-2010s interiors, and several Google reviews mention rooms feeling outdated. New photography would do more for conversion than anything else on this page. The layout takes drop-in replacements at the same filenames and aspect ratios.
 
 ## Copy
 
@@ -139,18 +152,48 @@ Everything below came from the property's own Choice Hotels listing or its exist
 
 ---
 
-## SEO notes
+## Search ranking and the price shown on Google
 
-Present: `Hotel` JSON-LD with address, geo coordinates (29.699891, -95.378284), telephone, check-in and check-out times, amenity list, `ReserveAction`, and `sameAs` pointing at the Choice listing. Canonical, Open Graph, Twitter card, sitemap, robots.
+This section exists because it was asked for directly, and because most of it cannot be done in code. Worth reading before anyone spends money on it.
 
-Still to do once the domain is live:
+### Nothing on this page can make it rank first
 
-1. Update the four hardcoded `https://www.mainstayhouston.com/` URLs in `index.html` (canonical, three OG tags) and the one in `sitemap.xml` if the domain differs.
-2. Claim and fill the Google Business Profile. For a single-property hotel, that profile outranks the website for most branded searches. It matters more than anything on this page.
-3. The `vercel.json` redirects map the old ProcessWire URLs to `/` so existing inbound links and any accumulated authority survive the cutover. Check your analytics for other old paths worth adding.
-4. This page will not outrank Booking.com or Expedia on generic queries like "hotels near Texas Medical Center". It can and should own branded queries: "mainstay suites houston", "mainstay old spanish trail", "mainstay medical center houston". The title tag and H1 are written for that.
+There is no markup, meta tag, or script that produces a top ranking. Anyone who tells you otherwise is selling something. What the page can do is not get in its own way, and it now does that: one H1, accurate title and description targeting the real queries, valid `Hotel` structured data, fast images, mobile layout, clean semantics, 301s from the old URLs.
 
----
+The harder problem is that the queries you named mostly do not return a list of websites at all. "Hotels near Texas Medical Center", "extended stay Houston medical center" and similar searches return Google's hotel unit: a map, a set of properties, and prices. That unit is not built from website HTML. It is built from Google Business Profile and Hotel Center. **Optimizing this page cannot put you in it.**
+
+So the ranking work that actually matters is not on this site:
+
+1. **Google Business Profile.** Claim it, verify it, set the category to Extended Stay Hotel, load the new photography when it exists, set the website link to this domain, and keep the hours and phone identical to what this page says. For a single property this outranks the website for most searches that matter.
+2. **Reviews.** The property sits at 3.8 from about 900 Google reviews. Rating and review volume are ranking inputs in the local pack. A steady flow of recent reviews will move the needle more than any change to this file.
+3. **NAP consistency.** Name, address and phone must match exactly across Google, Choice's listing, Yelp, Apple Maps and this site. Right now this page and the Choice listing agree, which is the important pair.
+
+### Why the resellers show a lower price, and what can be done
+
+Two separate things are going on, and neither is fixable from your website.
+
+**Google displays base rates before tax to US users.** This is Google's own documented behavior: for travelers in the United States and Canada it highlights the base rate without taxes and fees, while everywhere else it highlights the total. So every listing in that row, including the direct one, is showing a pre-tax number. Houston hotel tax is 17 percent. A $79 room is about $92 once tax is on it, whoever sold it.
+
+**Your rate does not reach Google from this website.** Google takes hotel prices through Hotel Center, fed by a connectivity partner. For a Choice franchise that is Choice's central distribution, not your marketing site. The "Official site" row in that price comparison is Choice's feed. You cannot add, undercut, or edit it from here. If the direct rate is showing higher than an OTA, that is a rate and distribution question for Choice, not a web development question.
+
+Real levers, roughly in order of effect:
+
+1. **Set the rates.** The property controls its own rates in Choice's system. Member rates are usually exempt from OTA rate parity clauses, which is why the Choice Privileges rate can legitimately sit below the public OTA rate. This is the actual price lever.
+2. **Choice's lowest price guarantee.** Choice publishes one covering choicehotels.com, its call center and hotel-direct bookings against third-party sites. It is now cited on the page. It is the honest answer to "they showed me cheaper".
+3. **Google's Price Accuracy Policy.** Free booking link ranking depends partly on historical price accuracy. If an OTA advertises a rate that is not what the guest ends up paying, that is reportable and it affects their placement.
+4. **The FTC Junk Fees Rule.** Effective 12 May 2025, 16 CFR Part 464 makes it an unfair and deceptive practice to advertise short-term lodging without clearly disclosing the total price including all mandatory fees. Civil penalties run to about $51,744 per violation. Note the limit: the rule covers **mandatory fees**, not taxes. An OTA showing a pre-tax base rate is complying. An OTA hiding a mandatory fee until checkout is not. Texas has already settled with Booking Holdings over deceptive pricing, so the state has form here.
+
+### What the page does instead
+
+Since the price display cannot be won, the page explains it. The "Why the resellers look cheaper" section states plainly that US price displays are pre-tax, gives the 17 percent figure, and includes a small estimator so a guest can see the real total before they leave. It also surfaces the strongest genuine advantage this property has: **Texas exempts stays of 30 or more consecutive days from hotel occupancy tax.** On a month-long medical stay that is worth more than any rate difference an OTA can advertise, and no reseller comparison row will ever show it.
+
+The tax rate is a single constant at the top of the script:
+
+```js
+var TAX = 0.17;   // 6% state + 7% Houston + 2% Harris County + 2% Sports Authority
+```
+
+Confirm it against the Texas Comptroller before launch and edit there if it has moved. The 30-night exemption should also be confirmed with your accountant for how it is applied at this property, since the refund-versus-waiver mechanics vary.
 
 ## Accessibility
 
@@ -166,8 +209,8 @@ Start from `index.html`. It is self-contained: styles in one `<style>` block, be
 
 Most likely next tasks, in the order they would pay off:
 
-1. Verify the Choice deep link parameters actually prefill dates. Thirty seconds: open the page, drag the slider to 12 nights, click the button, see whether Choice shows your dates.
+1. Verify the Choice deep link parameters actually prefill dates. Thirty seconds: open the page, set check-in and check-out, click See rates, see whether Choice shows your dates.
 2. Confirm the shuttle hours and breakfast, fix the copy.
 3. New photography.
-4. Google Business Profile.
+4. Google Business Profile. See the ranking section above; this is the highest-leverage item on the whole list.
 5. Decide whether Meetings and Events deserves more than the one line it has in Details.
