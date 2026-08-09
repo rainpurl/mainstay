@@ -1,6 +1,6 @@
 # MainStay Suites Houston: HANDOFF
 
-**Version:** v2
+**Version:** v3
 **Built:** August 2026
 **Deploy target:** Vercel (domain pending, eventually `mainstayhouston.com`)
 **Property:** MainStay Suites Texas Medical Center / Reliant Park, 3134 Old Spanish Trail, Houston, TX 77054
@@ -37,31 +37,28 @@ Both accent colours were sampled directly out of the official MainStay Suites lo
 | Token | Hex | Use |
 |---|---|---|
 | `--navy` | `#003046` | Brand navy. Dark sections, headings, body text on light. |
-| `--seafoam` | `#A1D7BE` | Brand mint. Every call to action, the shuttle band, accent text. |
-| `--seafoam-deep` | `#2F7A5E` | Darkened seafoam for small text on light backgrounds (contrast). |
-| `--paper` | `#EDF1F0` | Page background, a cool neutral pulled from desaturating the seafoam. |
+| `--seafoam` | `#A1D7BE` | Brand mint. Buttons, figures, the logo mark. |
+| `--seafoam-deep` | `#2F7A5E` | Darkened seafoam, used only for focus rings. |
+| `--paper` | `#EDF1F0` | Page background, a cool neutral derived from the seafoam. |
 | `--paper-hi` | `#F7F9F8` | Alternating section background. |
-| `--ink` | `#08202B` | Body text. |
+| `--ink` | `#08202B` | Body text and labels. |
 | `--slate` | `#4A6270` | Secondary text. |
 
-**The old site's gold `#d8a641` is gone.** It was never a MainStay brand colour, it was a local addition. Everything is now navy and seafoam only.
+**Type: Poppins only.** Weights 300, 400, 500, 600. One family, one request, no display face, no mono.
 
-**Type:** Fraunces (display, variable, WONK axis on), Archivo (body), IBM Plex Mono (figures, labels, fine print). All from Google Fonts, one request.
+Choice Hotels does not publish a brand type spec, so the face was identified from the logo artwork itself. The wordmark has a splayed `M` whose vertex reaches the baseline, a single-storey circular `a`, a round dot on the `i`, a flat-topped `t` and a straight diagonal `y`. Poppins matches all of those. Jost and Questrial were tested and rejected: Jost is too narrow and its `M` vertex stops short of the baseline. Corroborating evidence: the old mainstayhouston.com already loaded Poppins from Google Fonts, so the previous agency reached the same conclusion.
 
----
+If you get hold of the real MainStay brand kit and the licensed face is different (Century Gothic and Avant Garde are the other plausible candidates, and the old site's component CSS did declare Century Gothic), swapping is one line: the Google Fonts `<link>` in the head, plus the `font-family` on `body`.
 
-## The signature element
+**The wordmark is always the logo file, never type.** `img/logo-navy.png` in the header, `img/logo-reverse.png` on the splash and in the footer. The reverse lockup was generated from the official artwork by recolouring the navy type to white while leaving the seafoam mark untouched. Nowhere does the page set "MainStay Suites" in a typeface.
 
-The hero is a **stay-length planner**, not a headline and a photo. A slider from 1 to 30 nights that:
+## Structure
 
-1. sets the number of nights and computes the departure date,
-2. swaps in a different line of copy depending on the length of stay (short stay talks about the shuttle, seven nights mentions weekly rates, thirty nights tells you to call for a monthly rate),
-3. relabels the button to "Check rates for N nights",
-4. writes the dates into **every** booking link on the page at once.
+The page opens on a full-viewport splash: property photo, navy scrim, the logo, one line of description, and a single Book now button. Nothing else competes with it.
 
-This is the one place the design spends its boldness. The reasoning: this property's guests are mostly at the Texas Medical Center for treatment or caregiving, and the variable that actually defines their booking is how long they will be in Houston, not which room they want.
+The header is fixed but starts translated off-screen. An IntersectionObserver on the splash slides it in once the splash scrolls out of view, and slides it back out when you return to the top. The mobile booking dock follows the same trigger. If IntersectionObserver is missing the header just stays visible, so there is no state where the page loses its navigation.
 
----
+Below the splash: Suites, The property, Getting around, Details, Book direct, footer. No section navigation, no menu, no internal links other than the scroll cue. Every call to action goes to the same place.
 
 ## Booking deep link, please verify this
 
@@ -100,13 +97,26 @@ The JSON-LD `sameAs` and `ReserveAction` still reference the canonical property 
 
 Every photo is a real photograph of this property. No stock, no staged interiors from other hotels.
 
-They were pulled from the live mainstayhouston.com media library at original resolution (2000×1333 and 2400×1599), then resized to responsive widths, given a light exposure and saturation correction, sharpened after downscale, and exported as WebP with JPEG fallbacks. The old site was serving several of these at 600×450, which is where the low-res look came from. The source files were always bigger.
+They were pulled from the live mainstayhouston.com media library at original resolution (2000x1333 and 2400x1599), resized to responsive widths, given a light exposure and saturation correction, sharpened after downscale, and exported as WebP with JPEG fallbacks. The old site was serving several of these at 600x450, which is where the low-res look came from. The source files were always bigger.
 
-Photos used: pool and courtyard (hero), lobby, breakfast lounge, fitness room, guest laundry, suite kitchenette, king suite, two-queen suite, queen suite, accessible bathroom.
+Photos used: pool and courtyard (splash and property grid), lobby, breakfast area, fitness room, guest laundry, king suite, two-queen suite, queen suite, accessible bathroom.
 
-**One caveat.** These images are dated. They read as early-2010s interiors, and several Google reviews mention rooms feeling outdated. New photography would do more for conversion than anything else on this page. The layout is built to take better images the moment you have them, same filenames, same aspect ratios.
+**One caveat.** These images are dated. They read as early-2010s interiors, and several Google reviews mention rooms feeling outdated. New photography would do more for conversion than anything else on this page. The layout takes drop-in replacements at the same filenames and aspect ratios.
 
----
+## Copy
+
+The page carries about 380 words of visible text, down from roughly 900. It was written against the Wikipedia:Signs of AI writing field guide. Specifically removed:
+
+- Rule-of-three constructions. The old headline was "A kitchen, a couch, and a short ride to the Medical Center."
+- Negative parallelism. "Book on Choice Hotels, not the resellers" became "Book direct".
+- The bold inline-header vertical list with 01/02/03 markers in the booking section, which is one of the more recognisable tells. It is now two plain sentences.
+- Present-participle analysis tacked onto sentence ends ("so you can pack lighter than you think").
+- Invented claims presented as fact: "The free shuttle is the reason most people book here", "The one families book when several people are taking turns at the hospital". Neither was sourced.
+- Punched-up rhetorical framing: "Three weeks of hospital cafeteria food is a long three weeks."
+- All uppercase letter-spaced eyebrow labels. There are now zero `text-transform:uppercase` rules in the stylesheet.
+- Em dashes. There are none in the file.
+
+Headings are plain nouns in sentence case: Suites, The property, Getting around, Details, Book direct. The copy uses `is` and `has` rather than `serves as` and `features`, which the field guide notes as a human signal.
 
 ## Facts to verify before you point a domain at this
 
@@ -160,4 +170,4 @@ Most likely next tasks, in the order they would pay off:
 2. Confirm the shuttle hours and breakfast, fix the copy.
 3. New photography.
 4. Google Business Profile.
-5. Decide whether Meetings and Events deserves a section.
+5. Decide whether Meetings and Events deserves more than the one line it has in Details.
