@@ -1,6 +1,6 @@
 # MainStay Suites Houston: HANDOFF
 
-**Version:** v8
+**Version:** v9
 **Built:** August 2026
 **Deploy target:** Vercel (domain pending, eventually `mainstayhouston.com`)
 **Property:** MainStay Suites Texas Medical Center / Reliant Park, 3134 Old Spanish Trail, Houston, TX 77054
@@ -226,6 +226,11 @@ The page carries about 380 words of visible text, down from roughly 900. It was 
 
 Headings are plain nouns in sentence case: Suites, The property, Getting around, Details, Book direct. The copy uses `is` and `has` rather than `serves as` and `features`, which the field guide notes as a human signal.
 
+## Corrected on owner instruction
+
+- **The airport shuttle is free.** Choice's listing describes it as available for a fee. The owner says it is not. Details now reads "Free, to and from Hobby". If the Choice listing is wrong it should be corrected there too, since that is what the OTAs and Google pull from.
+- **Pets** came out of Details, replaced by high speed WiFi. The pet policy is still in the Questions section and still in the `Hotel` structured data as `petsAllowed: false`, so nothing is lost.
+
 ## Facts to verify before you point a domain at this
 
 Everything below came from the property's own Choice Hotels listing or its existing site. It is worth a five-minute call to the front desk to confirm, because publishing a wrong detail is the exact problem this site exists to solve.
@@ -247,6 +252,21 @@ Everything below came from the property's own Choice Hotels listing or its exist
 
 ---
 
+## Copy and save deterrents
+
+`user-select: none` on `body`, no drag on images and video, `contextmenu` and `copy` suppressed by script, plus `controlslist="nodownload noplaybackrate"`, `disablepictureinpicture` and `disableremoteplayback` on the reel.
+
+**Be clear about what this achieves.** It stops accidental selection, casual right-click saves and image drags. It stops nothing else. View source, DevTools, the network tab, `curl`, browser extensions and screenshots all bypass it in seconds. Nothing served over HTTP can be made uncopyable, and the video files sit at fixed URLs under `/vid/` that anyone can request directly. Treat this as tidiness, not protection.
+
+**Two deliberate exemptions**, both marked with `class="pick"`:
+
+- the phone number in the header
+- the address and phone in the footer
+
+Guests genuinely need to copy those, and locking them would cause support calls rather than prevent scraping. Form fields and links are exempt too, or the date pickers and the booking button would break. To lock the page down completely, delete the `.pick` rule from the stylesheet and drop `.pick` from the `isExempt` selector in the script.
+
+One thing to watch: `pointer-events: none` on images means an image cannot receive clicks, and events fall through to whatever is behind it. That is what keeps the header logo working as a link. Verified: the logo anchor is still the hit target and clicking it still returns to the top. If you ever wrap an image in something clickable, check it still responds.
+
 ## Discoverability: search and assistants
 
 ### What is on the page
@@ -264,7 +284,7 @@ Ten plain question-and-answer pairs in `<details>` elements. Collapsed by defaul
 
 This section exists because of a real trade-off. Cutting the page to 384 words made it clean but gave retrieval systems very little to match. Someone asking an assistant for an extended stay near MD Anderson with a kitchen and a shuttle needs those facts stated plainly somewhere. The page is now 676 words, and almost all of the addition is inside collapsed answers.
 
-**The FAQ answers and the JSON-LD are generated from the same source.** If you edit a question or answer in the markup, regenerate the `FAQPage` block or they will drift apart. Note also that `FAQPage` no longer produces rich results in Google for most sites, since Google restricted them to government and health authorities in 2023. It is here for machine parsing, not for a snippet.
+**The FAQ answers and the JSON-LD are generated from the same source.** If you edit a question or answer in the markup, regenerate the `FAQPage` block or they will drift apart. Watch for quotes in particular: adding `"Book Now"` to an answer broke the JSON until the block was rebuilt with proper escaping. Regenerate it programmatically rather than hand-editing both. Note also that `FAQPage` no longer produces rich results in Google for most sites, since Google restricted them to government and health authorities in 2023. It is here for machine parsing, not for a snippet.
 
 ### robots.txt
 
@@ -296,6 +316,12 @@ There is still no mechanism that guarantees a top position, and the two biggest 
 
 1. **Google Business Profile.** Queries like "hotels near Texas Medical Center" return Google's hotel unit, which is built from Business Profile and Hotel Center, not from HTML. No amount of work on this file enters that unit.
 2. **Get listed where this audience already looks.** MD Anderson publishes a lodging PDF and directs patients to **joeshouse.org**, which has a dedicated MD Anderson Houston page. Those pages are exactly what an assistant retrieves when asked this question, and they reach every patient planning a trip. There is also MD Anderson's iDeal program for staff and vendor discounts. Getting on those lists is worth more than everything in this zip.
+
+### The book-direct list
+
+The Book direct section lists five things: free high speed WiFi, free on-site parking, the lowest available rate, Choice Privileges points, and changes handled by the front desk.
+
+Worth knowing that only the last two are genuinely exclusive to direct booking. WiFi and parking are free to every guest however they booked. The list is headed by the booking argument rather than claiming exclusivity, which keeps it accurate, but do not let it drift into wording like "only when you book direct" for those two items. A guest who books through a reseller and arrives expecting to be charged for parking is a complaint waiting to happen, and under the FTC fee rule that kind of framing is the sort of thing that attracts attention.
 
 ### The medical rate gap
 
