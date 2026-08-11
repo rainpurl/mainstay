@@ -6,6 +6,7 @@
 <title>Extended Stay Hotel near the Texas Medical Center | MainStay Suites Houston</title>
 <meta name="description" content="Extended stay hotel under two miles from the Texas Medical Center and MD Anderson, on Old Spanish Trail in Houston. Every suite has a kitchen. Free weekday shuttle, free parking, weekly rates. Book direct with Choice Hotels.">
 <link rel="canonical" href="https://www.mainstayhouston.com/">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
 <meta name="robots" content="index,follow,max-image-preview:large">
 
 <meta property="og:type" content="website">
@@ -25,7 +26,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="img/king-suite-1400.webp" imagesrcset="img/king-suite-900.webp 900w, img/king-suite-1400.webp 1400w, img/king-suite-2000.webp 2000w" imagesizes="100vw">
+<link rel="preload" as="image" href="img/reel-poster-1280.jpg" media="(min-width:640px)" fetchpriority="high">
+<link rel="preload" as="image" href="img/reel-poster-900.jpg" media="(max-width:639px)" fetchpriority="high">
 
 <style>
 :root{
@@ -92,11 +94,8 @@ html.js header.on{transform:translateY(0)}
   text-align:center;background:var(--navy);color:var(--paper-hi);isolation:isolate;overflow:hidden;
   padding:80px var(--gut) 96px}
 .splash__media{position:absolute;inset:0;z-index:-2;background:var(--navy)}
-.slide{position:absolute;inset:0;display:block;opacity:0;
-  transition:opacity 1.5s ease-in-out;will-change:opacity}
-.slide.is-on{opacity:1}
-.slide img{width:100%;height:100%;object-fit:cover;object-position:50% 55%}
-@media(prefers-reduced-motion:reduce){.slide{transition:none}}
+.reel{position:absolute;inset:0;width:100%;height:100%;display:block;
+  object-fit:cover;object-position:50% 52%;background:var(--navy) center/cover no-repeat}
 .splash::before{content:"";position:absolute;inset:0;z-index:-1;
   background:
     radial-gradient(105% 80% at 50% 44%,rgba(0,48,70,.80) 0%,rgba(0,48,70,.93) 58%,rgba(0,48,70,.99) 100%),
@@ -165,29 +164,20 @@ h2{font-size:clamp(26px,3.4vw,40px)}
 .dt{padding:18px 0;border-top:1px solid var(--line)}
 .dt h3{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:4px;letter-spacing:0}
 .dt p{font-size:15px;margin:0;font-weight:300}
-.dt p+p{margin-top:3px;color:var(--slate);font-size:13.8px}
 
-/* ---------------- cost ---------------- */
-.cost{display:grid;gap:clamp(24px,3.4vw,52px);grid-template-columns:1fr 1fr;
-  align-items:start;margin-top:clamp(28px,3.4vw,44px)}
-@media(max-width:820px){.cost{grid-template-columns:1fr}}
-.cost__box{background:var(--navy);color:var(--paper-hi);border-radius:var(--r);padding:24px 24px 26px}
-.cost__lab{font-size:13.5px;font-weight:400;color:rgba(247,249,248,.8);margin:0 0 16px}
-.cost__row{display:flex;gap:14px;flex-wrap:wrap}
-.cost__row>div{flex:1;min-width:120px}
-.cost__row label{display:block;font-size:12.5px;font-weight:300;color:rgba(247,249,248,.75);margin-bottom:6px}
-.cost__in{display:flex;align-items:center;gap:6px;background:rgba(247,249,248,.09);
-  border:1px solid var(--line-dark);border-radius:var(--r);padding:0 12px}
-.cost__in span{font-size:14.5px;color:rgba(247,249,248,.7)}
-.cost__in input{width:100%;background:none;border:0;color:var(--paper-hi);
-  font-family:inherit;font-size:15.5px;padding:12px 0;-moz-appearance:textfield}
-.cost__in input:focus{outline:none}
-.cost__in:focus-within{border-color:var(--seafoam)}
-.cost__out{margin:18px 0 0;font-size:15px;font-weight:300;line-height:1.6;color:var(--seafoam)}
-.cost__out b{display:block;font-size:26px;font-weight:500;letter-spacing:-.02em;color:var(--seafoam);margin-bottom:2px}
-.cost__h{font-size:17px;margin:0 0 6px}
-.cost h3+p{font-size:15px;font-weight:300;color:var(--slate);margin:0 0 22px;line-height:1.6}
-.cost h3+p a{color:var(--seafoam-deep)}
+/* ---------------- questions ---------------- */
+.qas{margin-top:clamp(26px,3.2vw,40px);max-width:860px;border-top:1px solid var(--line)}
+.qa{border-bottom:1px solid var(--line)}
+.qa summary{list-style:none;cursor:pointer;padding:17px 40px 17px 0;position:relative;
+  font-size:16px;font-weight:500;color:var(--ink)}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{content:"";position:absolute;right:8px;top:50%;width:9px;height:9px;
+  margin-top:-6px;border-right:1.6px solid var(--seafoam-deep);border-bottom:1.6px solid var(--seafoam-deep);
+  transform:rotate(45deg);transition:transform .2s ease}
+.qa[open] summary::after{transform:rotate(-135deg);margin-top:-3px}
+.qa summary:hover{color:var(--seafoam-deep)}
+.qa p{margin:0 0 20px;padding-right:40px;font-size:15px;font-weight:300;
+  color:var(--slate);line-height:1.65;max-width:66ch}
 
 /* ---------------- booking block ---------------- */
 .book{display:grid;gap:clamp(28px,3.6vw,60px);grid-template-columns:1fr 1fr;align-items:center}
@@ -251,26 +241,9 @@ footer a{color:var(--seafoam);text-underline-offset:3px}
 <!-- ================= SPLASH ================= -->
 <section class="splash" id="top">
   <div class="splash__media" aria-hidden="true">
-    <picture class="slide is-on">
-      <source type="image/webp" srcset="img/king-suite-900.webp 900w, img/king-suite-1400.webp 1400w, img/king-suite-2000.webp 2000w" sizes="100vw">
-      <img src="img/king-suite-1400.jpg" srcset="img/king-suite-900.jpg 900w, img/king-suite-1400.jpg 1400w, img/king-suite-2000.jpg 2000w" sizes="100vw" alt="" fetchpriority="high" width="2400" height="1599">
-    </picture>
-    <picture class="slide">
-      <source type="image/webp" srcset="img/two-queens-900.webp 900w, img/two-queens-1400.webp 1400w, img/two-queens-2000.webp 2000w" sizes="100vw">
-      <img src="img/two-queens-1400.jpg" srcset="img/two-queens-900.jpg 900w, img/two-queens-1400.jpg 1400w, img/two-queens-2000.jpg 2000w" sizes="100vw" alt="" loading="lazy" width="2400" height="1599">
-    </picture>
-    <picture class="slide">
-      <source type="image/webp" srcset="img/suite-desk-900.webp 900w, img/suite-desk-1400.webp 1400w, img/suite-desk-2000.webp 2000w" sizes="100vw">
-      <img src="img/suite-desk-1400.jpg" srcset="img/suite-desk-900.jpg 900w, img/suite-desk-1400.jpg 1400w, img/suite-desk-2000.jpg 2000w" sizes="100vw" alt="" loading="lazy" width="2400" height="1599">
-    </picture>
-    <picture class="slide">
-      <source type="image/webp" srcset="img/breakfast-900.webp 900w, img/breakfast-1400.webp 1400w, img/breakfast-2000.webp 2000w" sizes="100vw">
-      <img src="img/breakfast-1400.jpg" srcset="img/breakfast-900.jpg 900w, img/breakfast-1400.jpg 1400w, img/breakfast-2000.jpg 2000w" sizes="100vw" alt="" loading="lazy" width="2400" height="1599">
-    </picture>
-    <picture class="slide">
-      <source type="image/webp" srcset="img/lobby-900.webp 900w, img/lobby-1400.webp 1400w, img/lobby-2000.webp 2000w" sizes="100vw">
-      <img src="img/lobby-1400.jpg" srcset="img/lobby-900.jpg 900w, img/lobby-1400.jpg 1400w, img/lobby-2000.jpg 2000w" sizes="100vw" alt="" loading="lazy" width="2400" height="1599">
-    </picture>
+    <video id="reel" class="reel"
+           muted loop playsinline disablepictureinpicture preload="none"
+           width="1280" height="816"></video>
   </div>
   <div class="splash__in">
     <img class="splash__logo" src="img/logo-reverse.png" alt="MainStay Suites, extended stay by Choice Hotels" width="639" height="216">
@@ -389,46 +362,63 @@ footer a{color:var(--seafoam);text-underline-offset:3px}
   <div class="wrap">
     <h2 id="details">Details</h2>
     <div class="details">
-      <div class="dt"><h3>Check in and out</h3><p>3:00 pm and 11:00 am</p><p>Front desk open 24 hours.</p></div>
-      <div class="dt"><h3>Deposit</h3><p>$100 card hold</p><p>Refunded at the end of your stay.</p></div>
-      <div class="dt"><h3>Children</h3><p>18 and under stay free</p><p>Age at time of booking.</p></div>
-      <div class="dt"><h3>Pets</h3><p>Not permitted</p><p>Service animals at no charge.</p></div>
-      <div class="dt"><h3>Smoking</h3><p>Smoke free</p><p>The whole property.</p></div>
-      <div class="dt"><h3>Parking</h3><p>Free, on site</p><p>Truck parking available.</p></div>
-      <div class="dt"><h3>Airport shuttle</h3><p>Available for a fee</p><p>To and from Hobby.</p></div>
-      <div class="dt"><h3>Meeting room</h3><p>Available to book</p><p>Call the front desk.</p></div>
+      <div class="dt"><h3>Check in and out</h3><p>3:00 pm and 11:00 am</p></div>
+      <div class="dt"><h3>Deposit</h3><p>$100 card hold, refunded at checkout</p></div>
+      <div class="dt"><h3>Children</h3><p>18 and under stay free</p></div>
+      <div class="dt"><h3>Pets</h3><p>Not permitted, service animals only</p></div>
+      <div class="dt"><h3>Smoking</h3><p>Smoke free property</p></div>
+      <div class="dt"><h3>Parking</h3><p>Free on site, trucks included</p></div>
+      <div class="dt"><h3>Airport shuttle</h3><p>To and from Hobby, for a fee</p></div>
+      <div class="dt"><h3>Meeting room</h3><p>Call the front desk to book</p></div>
     </div>
   </div>
 </section>
 
-<!-- ================= WHAT IT COSTS ================= -->
-<section class="sec sec--hi" aria-labelledby="cost">
+<!-- ================= QUESTIONS ================= -->
+<section class="sec sec--hi" aria-labelledby="questions">
   <div class="wrap">
-    <h2 id="cost">Why the resellers look cheaper</h2>
-    <p class="sub">For travelers in the United States, Google shows hotel prices as the base rate before tax. Houston hotel tax is 17 percent, so a room listed at $79 is about $92 once the tax is added, on any site. The number you compare is rarely the number you pay.</p>
-
-    <div class="cost">
-      <div class="cost__box">
-        <p class="cost__lab">Estimate your total</p>
-        <div class="cost__row">
-          <div>
-            <label for="rate">Nightly rate</label>
-            <div class="cost__in"><span>$</span><input type="number" id="rate" value="79" min="1" max="2000" step="1" inputmode="decimal"></div>
-          </div>
-          <div>
-            <label for="nts">Nights</label>
-            <div class="cost__in"><input type="number" id="nts" value="7" min="1" max="120" step="1" inputmode="numeric"></div>
-          </div>
-        </div>
-        <p class="cost__out" id="costOut" role="status" aria-live="polite"></p>
-      </div>
-
-      <div>
-        <h3 class="cost__h">Stay 30 nights or more and the tax comes off</h3>
-        <p>Texas exempts stays of 30 or more consecutive days from hotel occupancy tax. On a long stay that is a bigger saving than any rate any reseller can show you. Call the front desk on <a href="tel:+18322013131">(832) 201-3131</a> before you book a stay that long.</p>
-        <h3 class="cost__h">Choice guarantees the direct rate</h3>
-        <p>Choice Hotels publishes a lowest price guarantee: book through choicehotels.com, the Choice call center or the hotel directly, and if you find a lower public rate elsewhere, they will match it. Booking direct also earns Choice Privileges points. Reseller bookings do not.</p>
-      </div>
+    <h2 id="questions">Questions</h2>
+    <div class="qas">
+      <details class="qa">
+        <summary>Is there a shuttle to the Texas Medical Center?</summary>
+        <p>Yes, and it is free. It runs Monday to Friday, 7:00 am to 7:00 pm, to anywhere within three miles, which covers the Texas Medical Center and MD Anderson. Ask the front desk to add you to the list the night before.</p>
+      </details>
+      <details class="qa">
+        <summary>How far is the hotel from MD Anderson and the Texas Medical Center?</summary>
+        <p>Under two miles. NRG Park is 2.6 miles, the Houston Zoo 1.9 miles, the Museum of Natural Science 2.4 miles, and Hobby Airport 7.5 miles.</p>
+      </details>
+      <details class="qa">
+        <summary>Do the rooms have kitchens?</summary>
+        <p>Every one of the eighteen room types has a kitchen with a full-size refrigerator, a cooktop, a microwave, dishes and a coffee maker.</p>
+      </details>
+      <details class="qa">
+        <summary>Is there a medical rate for patients and caregivers?</summary>
+        <p>Call the front desk on (832) 201-3131 and ask. MD Anderson advises patients to ask hotels near the Texas Medical Center for a medical or patient rate, and you may be asked for proof of patient status.</p>
+      </details>
+      <details class="qa">
+        <summary>Are weekly rates available?</summary>
+        <p>Yes, from seven nights. Current rates are live on choicehotels.com, which is where the Book now button goes.</p>
+      </details>
+      <details class="qa">
+        <summary>What about staying a month or longer?</summary>
+        <p>Texas exempts stays of 30 or more consecutive days from hotel occupancy tax. Call the front desk before booking online so a long stay is set up correctly.</p>
+      </details>
+      <details class="qa">
+        <summary>Is parking free?</summary>
+        <p>Yes, on site and at no charge. There is truck parking as well.</p>
+      </details>
+      <details class="qa">
+        <summary>Is there guest laundry?</summary>
+        <p>Yes, on site, with washers, dryers and a folding table.</p>
+      </details>
+      <details class="qa">
+        <summary>Are pets allowed?</summary>
+        <p>No. Service animals are welcome at no charge.</p>
+      </details>
+      <details class="qa">
+        <summary>Are there accessible rooms?</summary>
+        <p>Five, both wheelchair and hearing accessible, with grab bars and roll-under sinks. Mention any other needs when you call and the front desk will note them.</p>
+      </details>
     </div>
   </div>
 </section>
@@ -555,6 +545,96 @@ footer a{color:var(--seafoam);text-underline-offset:3px}
 }
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://www.mainstayhouston.com/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is there a shuttle to the Texas Medical Center?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, and it is free. It runs Monday to Friday, 7:00 am to 7:00 pm, to anywhere within three miles, which covers the Texas Medical Center and MD Anderson. Ask the front desk to add you to the list the night before."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How far is the hotel from MD Anderson and the Texas Medical Center?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Under two miles. NRG Park is 2.6 miles, the Houston Zoo 1.9 miles, the Museum of Natural Science 2.4 miles, and Hobby Airport 7.5 miles."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do the rooms have kitchens?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Every one of the eighteen room types has a kitchen with a full-size refrigerator, a cooktop, a microwave, dishes and a coffee maker."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is there a medical rate for patients and caregivers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Call the front desk on (832) 201-3131 and ask. MD Anderson advises patients to ask hotels near the Texas Medical Center for a medical or patient rate, and you may be asked for proof of patient status."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are weekly rates available?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, from seven nights. Current rates are live on choicehotels.com, which is where the Book now button goes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What about staying a month or longer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Texas exempts stays of 30 or more consecutive days from hotel occupancy tax. Call the front desk before booking online so a long stay is set up correctly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is parking free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, on site and at no charge. There is truck parking as well."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is there guest laundry?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, on site, with washers, dryers and a folding table."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are pets allowed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Service animals are welcome at no charge."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are there accessible rooms?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Five, both wheelchair and hearing accessible, with grab bars and roll-under sinks. Mention any other needs when you call and the front desk will note them."
+      }
+    }
+  ]
+}
+</script>
+
 <script>
 (function(){
   "use strict";
@@ -614,52 +694,55 @@ footer a{color:var(--seafoam);text-underline-offset:3px}
     update();
   }
 
-  /* ---------------- total cost estimate ----------------
-     TAX is the combined Houston hotel occupancy tax: 6% state,
-     7% city, 2% Harris County, 2% Harris County / Houston Sports
-     Authority. Verify before launch and edit here if it changes. */
-  var TAX = 0.17;
-  var rate = document.getElementById("rate");
-  var nts  = document.getElementById("nts");
-  var out  = document.getElementById("costOut");
+  /* ---------------- splash reel ----------------
+     Sources are injected rather than written into the markup, so the
+     ~500 KB download never starts for people who asked not to have it:
+     reduced-motion, Save-Data, a slow connection, or a viewport under
+     REEL_MIN_WIDTH. Those visitors keep
+     the poster frame, which is what the <video> shows anyway. Without
+     JavaScript the poster also stands in, so nothing breaks.
+     Order matters: AV1 first (343 KB), then VP9 (457 KB), then H.264
+     (669 KB) as the universal fallback. The browser takes the first it
+     can decode. To swap the clip, replace the three files in vid/ and
+     the poster in img/. */
+  var REEL_MIN_WIDTH = 640;   // below this the poster still is used instead
 
-  function money(n){ return "$" + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
-  function cost(){
-    if (!rate || !nts || !out) return;
-    var r = parseFloat(rate.value) || 0;
-    var n = Math.max(1, parseInt(nts.value,10) || 1);
-    var sub = r * n;
-    var exempt = n >= 30;
-    var tax = exempt ? 0 : sub * TAX;
-    out.innerHTML = "<b>" + money(sub + tax) + "</b>" +
-      (exempt
-        ? n + " nights at " + money(r) + ". No hotel tax on stays of 30 nights or more."
-        : n + " nights at " + money(r) + " plus " + money(tax) + " tax.");
-  }
-  if (rate){ rate.addEventListener("input", cost); }
-  if (nts){ nts.addEventListener("input", cost); }
-  cost();
+  var reel = document.getElementById("reel");
+  if (reel){
+    var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    var slow = !!(conn && (conn.saveData ||
+                  /^(slow-)?2g$/.test(conn.effectiveType || "")));
+    var narrow = window.innerWidth < REEL_MIN_WIDTH;
+    // the poster is the permanent hero on narrow screens, so size it to fit
+    reel.poster = narrow ? "img/reel-poster-900.jpg" : "img/reel-poster-1280.jpg";
+    var still = matchMedia("(prefers-reduced-motion: reduce)").matches || slow || narrow;
 
-  /* ---------------- splash slideshow ---------------- */
-  var slides = document.querySelectorAll(".slide");
-  if (slides.length > 1 && !matchMedia("(prefers-reduced-motion: reduce)").matches){
-    var cur = 0, timer = null;
-    function step(){
-      slides[cur].classList.remove("is-on");
-      cur = (cur + 1) % slides.length;
-      slides[cur].classList.add("is-on");
+    if (!still){
+      [["vid/reel.av1.mp4",'video/mp4; codecs="av01.0.05M.08"'],
+       ["vid/reel.vp9.webm",'video/webm; codecs="vp9"'],
+       ["vid/reel.h264.mp4","video/mp4"]].forEach(function(pair){
+        var src = document.createElement("source");
+        src.src = pair[0]; src.type = pair[1];
+        reel.appendChild(src);
+      });
+      reel.preload = "auto";
+      reel.load();
+
+      var play = function(){ var p = reel.play(); if (p && p.catch) p.catch(function(){}); };
+      if (reel.readyState >= 2) play(); else reel.addEventListener("loadeddata", play, {once:true});
+
+      document.addEventListener("visibilitychange", function(){
+        document.hidden ? reel.pause() : play();
+      });
+
+      // stop decoding once the splash is off screen
+      var sp = document.getElementById("top");
+      if (sp && "IntersectionObserver" in window){
+        new IntersectionObserver(function(e){
+          e[0].isIntersecting ? play() : reel.pause();
+        }, {threshold:0.01}).observe(sp);
+      }
     }
-    function start(){ if (!timer) timer = setInterval(step, 5200); }
-    function stop(){ if (timer){ clearInterval(timer); timer = null; } }
-    document.addEventListener("visibilitychange", function(){
-      if (document.hidden) stop(); else start();
-    });
-    // only run while the splash is actually on screen
-    var sp = document.getElementById("top");
-    if (sp && "IntersectionObserver" in window){
-      new IntersectionObserver(function(e){ e[0].isIntersecting ? start() : stop(); },
-        {threshold:0.01}).observe(sp);
-    } else { start(); }
   }
 
   /* ---------------- header appears past the splash ---------------- */

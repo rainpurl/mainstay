@@ -1,4 +1,134 @@
+# MainStay Suites Texas Medical Center / Reliant Park
+# Everything on this site is public marketing material. Nothing is blocked.
+#
+# Note: the wildcard group below already grants access to every crawler
+# listed after it. The explicit groups are documentation, so that a future
+# edit does not silently cut off AI retrieval. If you ever add a Disallow
+# to the wildcard group, remember robots.txt uses most-specific-group-wins:
+# the named groups will NOT inherit it and must be updated too.
+
 User-agent: *
+Allow: /
+
+# ---------------------------------------------------------------
+# Search engines. Googlebot also feeds AI Overviews and AI Mode,
+# so those cannot be separated from ordinary Google Search.
+# ---------------------------------------------------------------
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Google-InspectionTool
+Allow: /
+
+User-agent: Storebot-Google
+Allow: /
+
+User-agent: bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# ---------------------------------------------------------------
+# AI search index crawlers. These build the retrieval indexes that
+# assistant answers are assembled from, so these are the ones that
+# matter for showing up when someone asks a chatbot where to stay.
+# ---------------------------------------------------------------
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+# ---------------------------------------------------------------
+# User-triggered fetchers. These fire when a live person asks an
+# assistant something and it opens this page to answer.
+# ---------------------------------------------------------------
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Meta-ExternalFetcher
+Allow: /
+
+User-agent: MistralAI-User
+Allow: /
+
+# ---------------------------------------------------------------
+# Model training crawlers. Allowed deliberately: a hotel wants to be
+# in the baseline knowledge of future assistants.
+# ---------------------------------------------------------------
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: Timpibot
+Allow: /
+
+User-agent: omgili
+Allow: /
+
+# ---------------------------------------------------------------
+# Data-use control tokens. Not crawlers. Allowing these permits
+# Google and Apple to use content their normal crawlers already
+# fetched for Gemini, Vertex AI and Apple Intelligence.
+# ---------------------------------------------------------------
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Google-CloudVertexBot
+Allow: /
+
+User-agent: Applebot-Extended
 Allow: /
 
 Sitemap: https://www.mainstayhouston.com/sitemap.xml
